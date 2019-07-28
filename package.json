@@ -1,0 +1,41 @@
+{
+  "name": "apollo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src",
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src"
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "proseWrap": "always",
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jedmao/apollo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jedmao/apollo/issues"
+  },
+  "homepage": "https://github.com/jedmao/apollo#readme",
+  "dependencies": {
+    "apollo-server": "^2.7.1",
+    "graphql": "^14.4.2",
+    "graphql-import": "^0.7.1",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.2.3",
+    "ts-node-dev": "^1.0.0-pre.40"
+  }
+}
