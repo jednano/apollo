@@ -1,35 +1,18 @@
 import { ApolloServer } from 'apollo-server'
 import { importSchema } from 'graphql-import'
 
-const typeDefs = importSchema('src/schema.graphql')
+import context from './context'
+import * as resolvers from './resolvers'
 
-const resolvers = {
-	ProductInterface: {
-		__resolveType: () => 'SimpleProduct',
-	},
-	Query: {
-		products: (_product: any, _args: any, context: any) => ({
-			items: [
-				{
-					name: context.elasticsearch(),
-				},
-			],
-		}),
-	},
+async function run() {
+	const server = new ApolloServer({
+		typeDefs: importSchema('src/schema.graphql'),
+		resolvers,
+		context,
+	})
+	return server.listen().then(({ url }) => {
+		console.log(`🚀 Server ready at ${url}`)
+	})
 }
 
-function elasticsearch() {
-	return 'baz'
-}
-
-const server = new ApolloServer({
-	typeDefs,
-	resolvers,
-	context: {
-		elasticsearch,
-	},
-})
-
-server.listen().then(({ url }) => {
-	console.log(`🚀 Server ready at ${url}`)
-})
+run().catch(console.error)
