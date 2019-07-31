@@ -14,6 +14,11 @@ async function run() {
 		typeDefs: importSchema('src/schema.graphql'),
 		resolvers,
 		context,
+		playground: {
+			settings: {
+				'schema.polling.enable': false,
+			},
+		} as any,
 	})
 	return server
 		.listen()
