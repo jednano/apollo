@@ -32,6 +32,7 @@
     "@elastic/elasticsearch": "^6.8.1",
     "apollo-server": "^2.7.2",
     "chalk": "^2.4.2",
+    "dataloader": "^1.4.0",
     "dotenv": "^8.0.0",
     "graphql": "^14.4.2",
     "graphql-import": "^0.7.1",
@@ -46,6 +47,7 @@
     "@types/graphql": "^14.2.3",
     "@types/lodash": "^4.14.136",
     "@types/mysql": "^2.15.6",
+    "@types/node": "^12.6.8",
     "kill-port": "^1.5.1",
     "ts-node-dev": "^1.0.0-pre.40"
   }

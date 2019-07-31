@@ -1,8 +1,6 @@
-import _chalk = require('chalk')
+import chalk from 'chalk'
 import { createConnection } from 'mysql'
 import sqltag, { empty, join, RawValue } from 'sql-template-tag'
-
-const { default: chalk } = _chalk
 
 const connection = createConnection({
 	host: process.env.MYSQL_HOST,
@@ -32,7 +30,7 @@ connection.on('error', console.error)
 
 process.once('SIGINT', gracefulExit).once('SIGTERM', gracefulExit)
 
-function gracefulExit() {
+export function gracefulExit() {
 	console.log(chalk.green('\nClosing MySQL connection...'))
 	connection.end(err => {
 		if (err) {
@@ -47,7 +45,7 @@ export default async function sql<T = any>(
 ): Promise<T> {
 	return new Promise((resolve, reject) => {
 		const query = sqltag(strings, ...values)
-		connection.query(query.sql, query.values, (err: Error, results: T) => {
+		connection.query(query.sql, query.values, (err, results: T) => {
 			if (err) {
 				reject(err)
 				return
