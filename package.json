@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src",
+    "predev": "kill-port 4000",
     "dev": "ts-node-dev --no-notify --respawn --transpileOnly src"
   },
   "prettier": {
@@ -31,15 +32,21 @@
     "@elastic/elasticsearch": "^6.8.1",
     "apollo-server": "^2.7.2",
     "chalk": "^2.4.2",
+    "dotenv": "^8.0.0",
     "graphql": "^14.4.2",
     "graphql-import": "^0.7.1",
+    "lodash": "^4.17.15",
     "mysql": "^2.17.1",
+    "sql-template-tag": "^3.2.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   },
   "devDependencies": {
+    "@types/dotenv": "^6.1.1",
     "@types/graphql": "^14.2.3",
+    "@types/lodash": "^4.14.136",
     "@types/mysql": "^2.15.6",
+    "kill-port": "^1.5.1",
     "ts-node-dev": "^1.0.0-pre.40"
   }
 }

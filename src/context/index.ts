@@ -1,9 +1,9 @@
 import elasticsearch from './elasticsearch'
-import mysql from './mysql'
+import sql from './sql'
 
 const context = {
 	elasticsearch,
-	mysql,
+	sql,
 }
 
 export default context

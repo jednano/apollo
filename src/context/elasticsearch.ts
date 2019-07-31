@@ -1,6 +1,6 @@
 import { Client, RequestParams, ApiResponse } from '@elastic/elasticsearch'
 
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({ node: process.env.ELASTICSEARCH_CLIENT })
 
 interface Source {
 	store_id: string
@@ -38,7 +38,7 @@ interface SearchResponse<T> {
 
 export default async function elasticsearch(query: Partial<Source>) {
 	const searchParams: RequestParams.Search<SearchBody> = {
-		index: 'magento2_product_1_v1',
+		index: process.env.ELASTICSEARCH_MAGENTO_INDEX,
 		body: {
 			query: {
 				match: query,

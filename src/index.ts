@@ -1,6 +1,9 @@
 import { ApolloServer } from 'apollo-server'
 import { importSchema } from 'graphql-import'
 
+import { config } from 'dotenv'
+config()
+
 import context from './context'
 import * as resolvers from './resolvers'
 
