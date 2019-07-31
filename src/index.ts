@@ -1,12 +1,10 @@
 import { ApolloServer } from 'apollo-server'
-import { Server } from 'http'
 import { importSchema } from 'graphql-import'
 
 import { config } from 'dotenv'
 config()
 
 import context from './context'
-import { gracefulExit } from './context/sql'
 import * as resolvers from './resolvers'
 
 async function run() {
@@ -20,12 +18,9 @@ async function run() {
 			},
 		} as any,
 	})
-	return server
-		.listen()
-		.then(({ url, server }: { url: string; server: Server }) => {
-			console.log(`🚀 Server ready at ${url}`)
-			server.on('close', gracefulExit)
-		})
+	return server.listen().then(({ url }) => {
+		console.log(`🚀 Server ready at ${url}`)
+	})
 }
 
 run().catch(console.error)

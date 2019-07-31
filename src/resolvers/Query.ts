@@ -1,14 +1,12 @@
 import Resolver from '../types/Resolver'
 
 const Query: Resolver = {
-	products: async (
-		_product,
-		{ search }: { search: string },
-		{ elasticsearch },
-	) => {
-		const items = await elasticsearch({ name: search })
-		return { items }
-	},
+	products: async () => ({
+		items: [
+			{ name: 'Pink Shirt', sku: 'pink_shirt' },
+			{ name: 'Blue Shirt', sku: 'blue_shirt' },
+		],
+	}),
 }
 
 export default Query

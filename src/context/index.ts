@@ -1,9 +1,3 @@
-import elasticsearch from './elasticsearch'
-import sql from './sql'
-
-const context = {
-	elasticsearch,
-	sql,
-}
+const context = {}
 
 export default context
