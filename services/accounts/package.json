@@ -1,0 +1,7 @@
+{
+  "name": "accounts",
+  "private": true,
+  "scripts": {
+    "start": "ts-node index.ts"
+  }
+}

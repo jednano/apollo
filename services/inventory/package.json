@@ -1,0 +1,7 @@
+{
+  "name": "inventory",
+  "private": true,
+  "scripts": {
+    "start": "ts-node index.ts"
+  }
+}

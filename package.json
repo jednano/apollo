@@ -5,10 +5,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src",
-    "predev": "kill-port 4000",
-    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src"
+    "start-gateway": "ts-node gateway.ts",
+    "start-service-products": "cd services/products && npm start",
+    "start-service-reviews": "cd services/reviews && npm start",
+    "start-service-accounts": "cd services/accounts && npm start",
+    "start-service-inventory": "cd services/inventory && npm start",
+    "start-services": "concurrently \"npm:start-service-*\"",
+    "postinstall": "lerna bootstrap",
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly scripts/dev.ts"
   },
   "prettier": {
     "arrowParens": "avoid",
@@ -29,9 +33,12 @@
   },
   "homepage": "https://github.com/jedmao/apollo#readme",
   "dependencies": {
+    "@apollo/federation": "^0.8.0",
+    "@apollo/gateway": "^0.8.1",
     "@elastic/elasticsearch": "^6.8.1",
     "apollo-server": "^2.7.2",
     "chalk": "^2.4.2",
+    "concurrently": "^4.1.1",
     "dataloader": "^1.4.0",
     "dotenv": "^8.0.0",
     "graphql": "^14.4.2",
@@ -49,6 +56,7 @@
     "@types/mysql": "^2.15.6",
     "@types/node": "^12.6.8",
     "kill-port": "^1.5.1",
+    "lerna": "^3.16.4",
     "ts-node-dev": "^1.0.0-pre.40"
   }
 }
