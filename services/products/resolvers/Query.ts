@@ -1,11 +1,7 @@
 import Resolver from '../types/Resolver'
 
 const Query: Resolver = {
-	products: async (
-		_product,
-		{ search }: { search: string },
-		{ elasticsearch },
-	) => {
+	products: async (_product, { search }, { elasticsearch }) => {
 		const items = await elasticsearch({ name: search })
 		return { items }
 	},

@@ -6,11 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start-gateway": "ts-node gateway.ts",
-    "start-service-products": "cd services/products && npm start",
-    "start-service-reviews": "cd services/reviews && npm start",
-    "start-service-accounts": "cd services/accounts && npm start",
-    "start-service-inventory": "cd services/inventory && npm start",
-    "start-services": "concurrently \"npm:start-service-*\"",
+    "start-services": "lerna run start",
     "postinstall": "lerna bootstrap",
     "dev": "ts-node-dev --no-notify --respawn --transpileOnly scripts/dev.ts"
   },

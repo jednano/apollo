@@ -1,3 +1,6 @@
+import { gql } from 'apollo-server';
+
+export default gql`
 # Attribute contains the attribute_type of the specified attribute_code and entity_type
 type Attribute {
   # The unique identifier for an attribute code. This value should be in lowercase letters without spaces.
@@ -1706,7 +1709,7 @@ type DownloadableProductSamples {
   title: String
 }
 
-# EntityUrl is an output object containing the `id`, `canonical_url`, and `type` attributes
+# EntityUrl is an output object containing the id, canonical_url, and type attributes
 type EntityUrl {
   # The internal relative URL. If the specified  url is a redirect, the query returns the redirected URL, not the original.
   canonical_url: String
@@ -2340,7 +2343,7 @@ type ProductTierPrices {
   website_id: Float
 }
 
-type Query {
+extend type Query {
   category(
     # Id of the category
     id: Int
@@ -2796,3 +2799,4 @@ type WishlistOutput {
   # The time of the last modification to the wish list
   updated_at: String
 }
+`

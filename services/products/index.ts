@@ -3,8 +3,20 @@ import { ApolloServer, gql } from 'apollo-server'
 import { Server } from 'http'
 import { pickBy } from 'lodash'
 
+import myTypeDefs from './schema.gql'
+
 import { config } from 'dotenv'
-config()
+const configResult = config({
+	path: __dirname + '/.env',
+})
+
+if (configResult.error) {
+	throw configResult.error
+}
+
+import context from './context'
+import { gracefulExit } from './context/sql'
+import * as resolvers from './resolvers'
 
 const products = [
 	{
@@ -28,7 +40,7 @@ const products = [
 	},
 ]
 
-const typeDefs = gql`
+const _typeDefs = gql`
 	extend type Query {
 		topProducts(first: Int = 5): [Product]
 	}
@@ -41,30 +53,40 @@ const typeDefs = gql`
 	}
 `
 
-const resolvers = {
-	Product: {
-		__resolveReference: (object: any) =>
-			products.find(product => product.upc === object.upc),
-	},
-	Query: {
-		topProducts: (_: any, args: any) => products.slice(0, args.first),
-	},
-}
-
 async function run() {
 	const server = new ApolloServer({
 		schema: buildFederatedSchema([
 			{
-				typeDefs,
-				resolvers,
+				typeDefs: {
+					definitions: [
+						...myTypeDefs.definitions,
+						..._typeDefs.definitions,
+					],
+					kind: 'Document',
+					loc: myTypeDefs.loc,
+				},
+				resolvers: {
+					...resolvers,
+					Product: {
+						__resolveReference: (object: any) =>
+							products.find(product => product.upc === object.upc),
+					},
+					Query: {
+						...(resolvers as any).Query,
+						topProducts: (_: any, args: any) =>
+							products.slice(0, args.first),
+					},
+				},
 			},
 		]),
+		context,
 	})
 	return server
 		.listen(pickBy({ port: process.argv[2] }))
-		.then(({ url }: { url: string; server: Server }) => {
+		.then(({ url, server }: { url: string; server: Server }) => {
 			console.log(`🚀 Server ready at ${url}`)
+			server.on('close', gracefulExit)
 		})
 }
 
-export default run().catch(console.error)
+run().catch(console.error)
