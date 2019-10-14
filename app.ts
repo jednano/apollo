@@ -1,5 +1,3 @@
-import mysql from 'mysql'
-
 type Operator =
 	| '='
 	| '!='
@@ -110,7 +108,6 @@ export class Predicate<
 export class WhereClause extends Array<
 	Predicate<WhereClause> | [Conjunction, Predicate<WhereClause>]
 > {
-	public values: string[] = []
 	public predicate?: Predicate<WhereClause>
 	public static start(expression: Primitive) {
 		const where = new WhereClause()
@@ -154,8 +151,9 @@ export interface AppConfig {
 }
 
 export class App {
+	private searchQuery = ''
 	private config: AppConfig = {
-		search: WhereClause.start('title').eq('?'),
+		search: WhereClause.start('title').eq(() => this.searchQuery),
 	}
 	public extend(extension: { search(query: WhereClause): WhereClause }) {
 		Object.keys(extension).forEach(key => {
@@ -165,7 +163,8 @@ export class App {
 		return this
 	}
 	public search(query: string) {
-		return this.config.search.values.push(query)
+		this.searchQuery = query
+		return this.config.search.toString()
 	}
 }
 
@@ -193,17 +192,7 @@ app.extend({
 })
 
 console.log(app.search('shirt'))
-// []
-
-console.log(app.search('blue'))
-// [ { id: 1, title: 'Nice blue shirt', color: 'blue' } ]
-
-console.log(
-	WhereClause.start('foo')
-		.eq('bar')
-		.and('baz')
-		.lte(42)
-		.or('qux')
-		.notLike('corge')
-		.toString(),
-)
+// WHERE "title" = shirt
+//   AND "color" != "black"
+//   OR "color" = "red"
+//   AND "price" <= 100
