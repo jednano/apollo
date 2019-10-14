@@ -21,7 +21,7 @@ const resolvers = {
 		},
 	},
 	User: {
-		__resolveReference(object: any) {
+		__resolveReference(object: { id: string }) {
 			return users.find(user => user.id === object.id)
 		},
 	},

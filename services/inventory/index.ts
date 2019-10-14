@@ -14,13 +14,13 @@ const typeDefs = gql`
 
 const resolvers = {
 	Product: {
-		__resolveReference(object: any) {
+		__resolveReference(object: { upc: string }) {
 			return {
 				...object,
 				...inventory.find(product => product.upc === object.upc),
 			}
 		},
-		shippingEstimate(object: any) {
+		shippingEstimate(object: { price: number; weight: number }) {
 			// free for expensive items
 			if (object.price > 1000) return 0
 			// estimate is based on weight

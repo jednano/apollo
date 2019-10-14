@@ -7,22 +7,28 @@ const typeDefs = gql`
 		id: ID!
 		body: String
 		product: Product
+		authorID: String
+		author: User
 	}
 
 	extend type Product @key(fields: "upc") {
 		upc: String! @external
 		reviews: [Review]
 	}
+
+	extend type User @key(fields: "id") {
+		id: ID! @external
+	}
 `
 
 const resolvers = {
 	Review: {
-		author(review: any) {
+		author(review: { authorID: string }) {
 			return { __typename: 'User', id: review.authorID }
 		},
 	},
 	Product: {
-		reviews(product: any) {
+		reviews(product: { upc: string }) {
 			return reviews.filter(review => review.product.upc === product.upc)
 		},
 	},

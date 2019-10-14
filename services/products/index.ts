@@ -68,11 +68,11 @@ async function run() {
 				resolvers: {
 					...resolvers,
 					Product: {
-						__resolveReference: (object: any) =>
+						__resolveReference: (object: { upc: string }) =>
 							products.find(product => product.upc === object.upc),
 					},
 					Query: {
-						...(resolvers as any).Query,
+						...resolvers.Query,
 						topProducts: (_: any, args: any) =>
 							products.slice(0, args.first),
 					},
