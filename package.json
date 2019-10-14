@@ -29,30 +29,30 @@
   },
   "homepage": "https://github.com/jedmao/apollo#readme",
   "dependencies": {
-    "@apollo/federation": "^0.8.0",
-    "@apollo/gateway": "^0.8.1",
-    "@elastic/elasticsearch": "^6.8.1",
-    "apollo-server": "^2.7.2",
+    "@apollo/federation": "^0.10.2",
+    "@apollo/gateway": "^0.10.7",
+    "@elastic/elasticsearch": "^7.4.0",
+    "apollo-server": "^2.9.6",
     "chalk": "^2.4.2",
-    "concurrently": "^4.1.1",
+    "concurrently": "^5.0.0",
     "dataloader": "^1.4.0",
-    "dotenv": "^8.0.0",
-    "graphql": "^14.4.2",
+    "dotenv": "^8.1.0",
+    "graphql": "^14.5.8",
     "graphql-import": "^0.7.1",
     "lodash": "^4.17.15",
     "mysql": "^2.17.1",
     "sql-template-tag": "^3.2.0",
-    "ts-node": "^8.3.0",
-    "typescript": "^3.5.3"
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4"
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
-    "@types/graphql": "^14.2.3",
-    "@types/lodash": "^4.14.136",
-    "@types/mysql": "^2.15.6",
-    "@types/node": "^12.6.8",
-    "kill-port": "^1.5.1",
-    "lerna": "^3.16.4",
-    "ts-node-dev": "^1.0.0-pre.40"
+    "@types/graphql": "^14.5.0",
+    "@types/lodash": "^4.14.144",
+    "@types/mysql": "^2.15.7",
+    "@types/node": "^12.7.12",
+    "kill-port": "^1.6.0",
+    "lerna": "^3.17.0",
+    "ts-node-dev": "^1.0.0-pre.43"
   }
 }
