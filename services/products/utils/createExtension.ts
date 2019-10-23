@@ -1,4 +1,5 @@
 import { GraphQLResolverMap } from 'apollo-graphql'
+export { gql } from 'apollo-server'
 import { ContextFunction, Context } from 'apollo-server-core'
 import { ExpressContext } from 'apollo-server-express/dist/ApolloServer'
 import { DocumentNode } from 'graphql'

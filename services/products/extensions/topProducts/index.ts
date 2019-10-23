@@ -1,6 +1,4 @@
-import { gql } from 'apollo-server'
-
-import createExtension from '../../utils/createExtension'
+import createExtension, { gql } from '../../utils/createExtension'
 
 import products = require('./products.json')
 
