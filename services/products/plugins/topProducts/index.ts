@@ -1,9 +1,10 @@
 import { gql } from 'apollo-server'
 
-import Plugin from '../Plugin'
+import createPlugin from '../../utils/createPlugin'
+
 import products = require('./products.json')
 
-const plugin: Plugin = {
+export default createPlugin({
 	typeDefs: gql`
 		extend type Query {
 			topProducts(first: Int = 5): [Product]
@@ -23,8 +24,14 @@ const plugin: Plugin = {
 		},
 		Query: {
 			topProducts: (_: any, args: any) => products.slice(0, args.first),
+			products: async (_product, { search }, { elasticsearch, foo }) => {
+				const items = await elasticsearch({ name: search })
+				foo()
+				return { items }
+			},
 		},
 	},
-}
-
-export default plugin
+	context: {
+		foo: () => 'bar',
+	},
+})
