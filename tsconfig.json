@@ -5,13 +5,17 @@
     "alwaysStrict": true,
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "lib": ["esnext"],
     "module": "commonjs",
     "newLine": "LF",
+    "noEmitHelpers": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "resolveJsonModule": true,
     "strict": true,
     "target": "es2015"
   }

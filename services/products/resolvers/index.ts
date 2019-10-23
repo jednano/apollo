@@ -1,3 +1,9 @@
-export { default as ProductInterface } from './ProductInterface'
-export { default as Query } from './Query'
-export { default as SimpleProduct } from './SimpleProduct'
+import ProductInterface from './ProductInterface'
+import Query from './Query'
+import SimpleProduct from './SimpleProduct'
+
+export default {
+	ProductInterface,
+	Query,
+	SimpleProduct,
+}

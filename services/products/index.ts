@@ -1,5 +1,5 @@
 import { buildFederatedSchema } from '@apollo/federation'
-import { ApolloServer, gql } from 'apollo-server'
+import { ApolloServer } from 'apollo-server'
 import { Server } from 'http'
 import { pickBy } from 'lodash'
 
@@ -16,70 +16,38 @@ if (configResult.error) {
 
 import context from './context'
 import { gracefulExit } from './context/sql'
-import * as resolvers from './resolvers'
-
-const products = [
-	{
-		upc: '1',
-		name: 'Table',
-		price: 899,
-		weight: 100,
-		foo: 'baz',
-	},
-	{
-		upc: '2',
-		name: 'Couch',
-		price: 1299,
-		weight: 1000,
-	},
-	{
-		upc: '3',
-		name: 'Chair',
-		price: 54,
-		weight: 50,
-	},
-]
-
-const _typeDefs = gql`
-	extend type Query {
-		topProducts(first: Int = 5): [Product]
-	}
-	type Product @key(fields: "upc") {
-		upc: String!
-		name: String
-		price: Int
-		weight: Int
-		foo: String
-	}
-`
+import plugins from './plugins'
+import rootResolvers from './resolvers'
+import extendResolvers from './utils/extendResolvers'
 
 async function run() {
 	const server = new ApolloServer({
 		schema: buildFederatedSchema([
 			{
 				typeDefs: {
-					definitions: [
-						...myTypeDefs.definitions,
-						..._typeDefs.definitions,
-					],
+					definitions: myTypeDefs.definitions.concat(
+						...plugins.flatMap(p => p.typeDefs?.definitions || []),
+					),
 					kind: 'Document',
 					loc: myTypeDefs.loc,
 				},
-				resolvers: {
-					...resolvers,
-					Product: {
-						__resolveReference: (object: { upc: string }) =>
-							products.find(product => product.upc === object.upc),
-					},
-					Query: {
-						...resolvers.Query,
-						topProducts: (_: any, args: any) =>
-							products.slice(0, args.first),
-					},
-				},
+				resolvers: plugins
+					.reverse()
+					.map(p => p.resolvers)
+					.filter(Boolean)
+					.reduce(
+						(result, more) => extendResolvers(result, more),
+						rootResolvers,
+					),
 			},
 		]),
-		context,
+		context: {
+			...plugins
+				.map(p => p.context)
+				.filter(Boolean)
+				.reduce((x, y) => ({ ...x, ...y }), {}),
+			...context,
+		},
 	})
 	return server
 		.listen(pickBy({ port: process.argv[2] }))
