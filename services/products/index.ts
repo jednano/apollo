@@ -16,7 +16,7 @@ if (configResult.error) {
 
 import context from './context'
 import { gracefulExit } from './context/sql'
-import plugins from './plugins'
+import extensions from './extensions'
 import rootResolvers from './resolvers'
 import extendResolvers from './utils/extendResolvers'
 
@@ -26,14 +26,14 @@ async function run() {
 			{
 				typeDefs: {
 					definitions: myTypeDefs.definitions.concat(
-						...plugins.flatMap(p => p.typeDefs?.definitions || []),
+						...extensions.flatMap(p => p.typeDefs?.definitions || []),
 					),
 					kind: 'Document',
 					loc: myTypeDefs.loc,
 				},
-				resolvers: plugins
+				resolvers: extensions
 					.reverse()
-					.map(p => p.resolvers)
+					.map(e => e.resolvers)
 					.filter(Boolean)
 					.reduce(
 						(result, more) => extendResolvers(result, more),
@@ -42,8 +42,8 @@ async function run() {
 			},
 		]),
 		context: {
-			...plugins
-				.map(p => p.context)
+			...extensions
+				.map(e => e.context)
 				.filter(Boolean)
 				.reduce((x, y) => ({ ...x, ...y }), {}),
 			...context,

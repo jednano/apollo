@@ -1,10 +1,15 @@
 import { gql } from 'apollo-server'
 
-import createPlugin from '../../utils/createPlugin'
+import createExtension from '../../utils/createExtension'
 
 import products = require('./products.json')
 
-export default createPlugin({
+/**
+ * A convenience function to ensure your extension properly implements the
+ * `Extension` interface. It also merges your `context` type with the root
+ * context and feeds it into your resolvers, again, for convenience.
+ */
+export default createExtension({
 	typeDefs: gql`
 		extend type Query {
 			topProducts(first: Int = 5): [Product]
@@ -24,14 +29,6 @@ export default createPlugin({
 		},
 		Query: {
 			topProducts: (_: any, args: any) => products.slice(0, args.first),
-			products: async (_product, { search }, { elasticsearch, foo }) => {
-				const items = await elasticsearch({ name: search })
-				foo()
-				return { items }
-			},
 		},
-	},
-	context: {
-		foo: () => 'bar',
 	},
 })

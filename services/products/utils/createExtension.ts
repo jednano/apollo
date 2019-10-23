@@ -5,11 +5,13 @@ import { DocumentNode } from 'graphql'
 
 import context from '../context'
 
-export default function createPlugin<T>(options: Plugin<T>) {
+export default function createExtension<T extends {} = {}>(
+	options: Extension<T>,
+) {
 	return options
 }
 
-export interface Plugin<T = object, U = T & typeof context> {
+export interface Extension<T = object, U = T & typeof context> {
 	context?: ContextFunction<ExpressContext, Context<T>> | Context<T>
 	resolvers?: GraphQLResolverMap<Context<U>>
 	typeDefs?: DocumentNode
