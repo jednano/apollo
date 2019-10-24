@@ -2,11 +2,6 @@ import createExtension, { gql } from '../../utils/createExtension'
 
 import products = require('./products.json')
 
-/**
- * A convenience function to ensure your extension properly implements the
- * `Extension` interface. It also merges your `context` type with the root
- * context and feeds it into your resolvers, again, for convenience.
- */
 export default createExtension({
 	typeDefs: gql`
 		extend type Query {
