@@ -30,7 +30,7 @@
   "homepage": "https://github.com/jedmao/apollo#readme",
   "dependencies": {
     "@elastic/elasticsearch": "^6.8.1",
-    "apollo-server": "^2.7.2",
+    "apollo-server": "^2.14.2",
     "chalk": "^2.4.2",
     "dataloader": "^1.4.0",
     "dotenv": "^8.0.0",
